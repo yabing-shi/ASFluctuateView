@@ -9,3 +9,5 @@ __初始化完成记得指定代理__
 ### 然后实现其代理方法：
 
 **- (void)fluctuateView:(UIView *)fluctuateView content:(UIView *)contentView itemIndex:(NSInteger)index;**
+
+主要用于实现item点击事件
