@@ -1,6 +1,6 @@
 # ASFluctuateView
 ### 用法：
-初始化方法：（参数用途有注释）
+初始化方法：（参数类型有注释）
 
 **- (id)initWithFrame:(CGRect)frame type:(XSFluctuateViewType)type isUpToDown:(BOOL)isUpToDown screenCanUsedHeight:(CGFloat)contentHeight;**
 
