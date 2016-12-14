@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qsY-th-aIb">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="SCq-a3-5Be">
+            <objects>
+                <navigationController id="qsY-th-aIb" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hA1-c9-lMg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="rpp-if-7k6" kind="relationship" relationship="rootViewController" id="i5p-lv-VOR"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sY8-1m-zjp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-814" y="244"/>
+        </scene>
+        <!--哈哈-->
+        <scene sceneID="9Lk-SI-iCD">
+            <objects>
+                <viewController title="哈哈" id="rpp-if-7k6" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fqU-n0-ozF"/>
+                        <viewControllerLayoutGuide type="bottom" id="8Is-Sd-Ht8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="onC-cf-UB6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EVv-Ld-Hnm">
+                                <rect key="frame" x="150" y="184" width="75" height="30"/>
+                                <state key="normal" title="UpToDown"/>
+                                <connections>
+                                    <action selector="upToDown:" destination="rpp-if-7k6" eventType="touchUpInside" id="vuR-5J-Hwj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ean-ma-8fR">
+                                <rect key="frame" x="145" y="284" width="84" height="30"/>
+                                <state key="normal" title="ActionSheet"/>
+                                <connections>
+                                    <action selector="actionSheet:" destination="rpp-if-7k6" eventType="touchUpInside" id="zSl-AZ-s07"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dvn-GQ-C1E">
+                                <rect key="frame" x="150" y="234" width="75" height="30"/>
+                                <state key="normal" title="DownToUp"/>
+                                <connections>
+                                    <action selector="downToUp:" destination="rpp-if-7k6" eventType="touchUpInside" id="CJa-84-4Lq"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ean-ma-8fR" firstAttribute="top" secondItem="Dvn-GQ-C1E" secondAttribute="bottom" constant="20" id="5R5-Bc-Ctz"/>
+                            <constraint firstItem="Dvn-GQ-C1E" firstAttribute="leading" secondItem="onC-cf-UB6" secondAttribute="leadingMargin" constant="134" id="7hs-bA-6bd"/>
+                            <constraint firstItem="Dvn-GQ-C1E" firstAttribute="top" secondItem="EVv-Ld-Hnm" secondAttribute="bottom" constant="20" id="86r-Ws-l1J"/>
+                            <constraint firstItem="ean-ma-8fR" firstAttribute="leading" secondItem="onC-cf-UB6" secondAttribute="leadingMargin" constant="129" id="B4d-cC-Vgr"/>
+                            <constraint firstItem="EVv-Ld-Hnm" firstAttribute="leading" secondItem="onC-cf-UB6" secondAttribute="leadingMargin" constant="134" id="BVh-Xg-Pny"/>
+                            <constraint firstItem="EVv-Ld-Hnm" firstAttribute="top" secondItem="fqU-n0-ozF" secondAttribute="bottom" constant="120" id="XGG-Nc-WCQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ean-ma-8fR" secondAttribute="trailing" constant="130" id="dV0-Gl-KcB"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Dvn-GQ-C1E" secondAttribute="trailing" constant="134" id="fCH-Kd-MJL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="EVv-Ld-Hnm" secondAttribute="trailing" constant="134" id="zBT-sG-QiJ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="rRT-1K-FNG"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nmf-w5-LlA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2" y="244"/>
+        </scene>
+    </scenes>
+</document>
