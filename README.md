@@ -1,4 +1,7 @@
 # ASFluctuateView
+###简介：
+自定义封装的仿actionsheet控件。
+
 ### 用法：
 初始化方法：（参数类型有注释）
 
