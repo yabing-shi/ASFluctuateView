@@ -14,5 +14,6 @@ __初始化完成记得指定代理__
 **- (void)fluctuateView:(UIView *)fluctuateView content:(UIView *)contentView itemIndex:(NSInteger)index;**
 
 主要用于实现item点击事件
+
 ###效果
 ![](ep.gif)
