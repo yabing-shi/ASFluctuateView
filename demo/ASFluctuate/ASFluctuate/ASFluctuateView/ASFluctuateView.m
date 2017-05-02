@@ -45,7 +45,9 @@
 }
 
 - (void)tapGestureAction:(UITapGestureRecognizer *)tap{
-    [self.delegate fluctuateView:self];
+    if ([self.delegate respondsToSelector:@selector(fluctuateView:)]) {
+        [self.delegate fluctuateView:self];
+    }
 }
 
 - (void)setItemArray:(NSArray *)itemArray{
@@ -160,7 +162,9 @@
 
 - (void)itemButtonClick:(UIButton *)btn{
     [self hideFluctuateView];
-    [self.delegate fluctuateView:self content:self.contentView itemIndex:btn.tag];
+    if ([self.delegate respondsToSelector:@selector(fluctuateView:content:itemIndex:)]) {
+        [self.delegate fluctuateView:self content:self.contentView itemIndex:btn.tag];
+    }
 }
 
 - (void)showInView:(UIView *)parentView{

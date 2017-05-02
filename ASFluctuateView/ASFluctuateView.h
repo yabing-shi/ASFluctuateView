@@ -1,5 +1,5 @@
 //
-//  XSFluctuateView.h
+//  ASFluctuateView.h
 //  xiangshangV3
 //
 //  Created by shiyabing on 16/2/29.
@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 
 typedef enum : NSUInteger {
-    XSFluctuateViewTypeRectangle,
-    XSFluctuateViewTypeActionSheet,
-} XSFluctuateViewType;
-
-@protocol XSFluctuateViewDelegate <NSObject>
+    ASFluctuateViewTypeRectangle,
+    ASFluctuateViewTypeActionSheet,
+} ASFluctuateViewType;
+@class ASFluctuateView;
+@protocol ASFluctuateViewDelegate <NSObject>
 
 @optional
 
@@ -24,7 +24,7 @@ typedef enum : NSUInteger {
  *
  *  @param fluctuateView 浮动视图
  */
-- (void)fluctuateView:(UIView *)fluctuateView;
+- (void)fluctuateView:(ASFluctuateView *)fluctuateView;
 
 /**
  *  @author shiyabing, 16-03-04 18:03:37
@@ -35,16 +35,16 @@ typedef enum : NSUInteger {
  *  @param contentView   self.contentView
  *  @param index         self.itemIndex
  */
-- (void)fluctuateView:(UIView *)fluctuateView content:(UIView *)contentView itemIndex:(NSInteger)index;
+- (void)fluctuateView:(ASFluctuateView *)fluctuateView content:(UIView *)contentView itemIndex:(NSInteger)index;
 
 @end
 
-@interface XSFluctuateView : UIView
+@interface ASFluctuateView : UIView
 @property (nonatomic, assign) NSInteger upCurrectItem;
 @property (nonatomic, assign) NSInteger downCurrectItem;
 @property (nonatomic, assign) BOOL isUpToDown;
 @property(nonatomic,strong)NSArray *itemArray;
-@property(nonatomic,strong)id<XSFluctuateViewDelegate>delegate;
+@property(nonatomic,strong)id<ASFluctuateViewDelegate>delegate;
 
 /**
  初始化方法
@@ -55,7 +55,7 @@ typedef enum : NSUInteger {
  @param contentHeight 内容高度
  @return <#return value description#>
  */
-- (id)initWithFrame:(CGRect)frame type:(XSFluctuateViewType)type isUpToDown:(BOOL)isUpToDown screenCanUsedHeight:(CGFloat)contentHeight;
+- (id)initWithFrame:(CGRect)frame type:(ASFluctuateViewType)type isUpToDown:(BOOL)isUpToDown screenCanUsedHeight:(CGFloat)contentHeight;
 
 /**
  *  @author shiyabing, 16-03-04 18:03:59

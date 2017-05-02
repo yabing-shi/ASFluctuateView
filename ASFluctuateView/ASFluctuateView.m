@@ -1,17 +1,20 @@
 //
-//  XSFluctuateView.m
+//  ASFluctuateView.m
 //  xiangshangV3
 //
 //  Created by shiyabing on 16/2/29.
 //  Copyright © 2016年 xiangshang360. All rights reserved.
 //
 
-#import "XSFluctuateView.h"
+#import "ASFluctuateView.h"
 
 #define ITEMHEIGHT 55
+#define kDeviceWidth           [UIScreen mainScreen].bounds.size.width
+#define KDeviceHeight          [UIScreen mainScreen].bounds.size.height
+#define ColorWithHex(hex,alph)  [UIColor colorWithRed:((float)((hex & 0xFF0000) >> 16))/255.0 green:((float)((hex & 0xFF00) >> 8))/255.0 blue:((float)(hex & 0xFF))/255.0 alpha:(alph)]
 
-@interface XSFluctuateView (){
-    XSFluctuateViewType currentType;
+@interface ASFluctuateView (){
+    ASFluctuateViewType currentType;
     CGFloat itemsHeight;
 }
 
@@ -22,9 +25,9 @@
 
 @end
 
-@implementation XSFluctuateView
+@implementation ASFluctuateView
 
-- (id)initWithFrame:(CGRect)frame type:(XSFluctuateViewType)type isUpToDown:(BOOL)isUpToDown screenCanUsedHeight:(CGFloat)contentHeight{
+- (id)initWithFrame:(CGRect)frame type:(ASFluctuateViewType)type isUpToDown:(BOOL)isUpToDown screenCanUsedHeight:(CGFloat)contentHeight{
     self = [super initWithFrame:frame];
     if (self) {
         self.tag = 8888;
@@ -42,8 +45,9 @@
 }
 
 - (void)tapGestureAction:(UITapGestureRecognizer *)tap{
-    DLog(@"被摸了");
-    [self.delegate fluctuateView:self];
+    if ([self.delegate respondsToSelector:@selector(fluctuateView:)]) {
+        [self.delegate fluctuateView:self];
+    }
 }
 
 - (void)setItemArray:(NSArray *)itemArray{
@@ -62,11 +66,11 @@
 }
 
 - (void)creatSubViews{
-    if (currentType == XSFluctuateViewTypeRectangle) {
+    if (currentType == ASFluctuateViewTypeRectangle) {
         for (NSInteger i = 0; i < self.itemArray.count; i ++) {
-            UILabel *divLabel = [XSHelper buildLabelWithFrame:CGRectMake(0, ITEMHEIGHT * i, kDeviceWidth, 1) bgColor:XSHLineColor textColor:nil font:nil];
+            UILabel *divLabel = [self buildLabelWithFrame:CGRectMake(0, ITEMHEIGHT * i, kDeviceWidth, 1) bgColor:ColorWithHex(0xe3e3e3,1) textColor:nil font:nil];
             [_contentView addSubview:divLabel];
-            UIButton *button = [XSHelper buildButtonWithFrame:CGRectMake(10, ITEMHEIGHT * i, kDeviceWidth - 20, ITEMHEIGHT) bgColor:Color_clearColor title:self.itemArray[i] font:15 textColor:ColorWithHex(0x252c3d, 1) corner:0];
+            UIButton *button = [self buildButtonWithFrame:CGRectMake(10, ITEMHEIGHT * i, kDeviceWidth - 20, ITEMHEIGHT) bgColor:[UIColor clearColor] title:self.itemArray[i] font:15 textColor:ColorWithHex(0x252c3d, 1) corner:0];
             button.tag = i;
             button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
             [button addTarget:self action:@selector(itemButtonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -74,19 +78,19 @@
         }
         [self.contentView addSubview:self.selectImgView];
         self.contentView.contentSize = CGSizeMake(0, itemsHeight);
-    }else if (currentType == XSFluctuateViewTypeActionSheet){
-        [XSHelper setCornerRadiusWithView:self.contentView corner:10 BorderColor:nil borderWidth:0 masksToBounds:YES];
-        [XSHelper setCornerRadiusWithView:self.cancelView corner:10 BorderColor:nil borderWidth:0 masksToBounds:YES];
+    }else if (currentType == ASFluctuateViewTypeActionSheet){
+        [self setCornerRadiusWithView:self.contentView corner:10 BorderColor:nil borderWidth:0 masksToBounds:YES];
+        [self setCornerRadiusWithView:self.cancelView corner:10 BorderColor:nil borderWidth:0 masksToBounds:YES];
         for (NSInteger i = 0; i < self.itemArray.count; i ++) {
-            UILabel *divLabel = [XSHelper buildLabelWithFrame:CGRectMake(0, ITEMHEIGHT * i, kDeviceWidth - 20, .5) bgColor:XSHLineColor textColor:nil font:nil];
-            UIButton *button = [XSHelper buildButtonWithFrame:CGRectMake(10, ITEMHEIGHT * i + .5, kDeviceWidth - 40, ITEMHEIGHT) bgColor:Color_clearColor title:self.itemArray[i] font:16 textColor:ColorWithHex(0x252c3d, 1) corner:0];
+            UILabel *divLabel = [self buildLabelWithFrame:CGRectMake(0, ITEMHEIGHT * i, kDeviceWidth - 20, .5) bgColor:ColorWithHex(0xe3e3e3,1) textColor:nil font:nil];
+            UIButton *button = [self buildButtonWithFrame:CGRectMake(10, ITEMHEIGHT * i + .5, kDeviceWidth - 40, ITEMHEIGHT) bgColor:[UIColor clearColor] title:self.itemArray[i] font:16 textColor:ColorWithHex(0x252c3d, 1) corner:0];
             button.tag = i;
             button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
             [button addTarget:self action:@selector(itemButtonClick:) forControlEvents:UIControlEventTouchUpInside];
             if (i == self.itemArray.count - 1) {
                 divLabel.frame = CGRectMake(0, ITEMHEIGHT * i - 9, kDeviceWidth, 1);
                 button.frame = CGRectMake(10, 0, kDeviceWidth - 40, ITEMHEIGHT);
-                button.titleLabel.font = kFont18;
+                button.titleLabel.font = [UIFont systemFontOfSize:18];
                 [button setTitleColor:ColorWithHex(0x0076ff, 1) forState:UIControlStateNormal];
                 [self.cancelView addSubview:button];
             }else{
@@ -104,7 +108,7 @@
 - (UIView *)cancelView{
     if (_cancelView == nil) {
         _cancelView = [[UIView alloc] initWithFrame:CGRectMake(10, KDeviceHeight, kDeviceWidth - 20, ITEMHEIGHT)];
-        _cancelView.backgroundColor = Color_whiteColor;
+        _cancelView.backgroundColor = [UIColor whiteColor];
     }
     return _cancelView;
 }
@@ -121,19 +125,24 @@
     if (_contentView == nil) {
         _contentView = [[UIScrollView alloc] init];
         _contentView.showsVerticalScrollIndicator = NO;
-        _contentView.backgroundColor = Color_whiteColor;
+        _contentView.backgroundColor = [UIColor whiteColor];
         _contentView.alpha = 0;
     }
-    if (currentType == XSFluctuateViewTypeRectangle) {
+    if (currentType == ASFluctuateViewTypeRectangle) {
         if (_isUpToDown) {
-            _contentView.frame = CGRectMake(0, 0, kDeviceWidth, _contentHeight);
+            _contentView.frame = CGRectMake(0, 0, self.frame.size.width, _contentHeight);
         }else{
-            _contentView.frame = CGRectMake(0, KDeviceHeight, kDeviceWidth, _contentHeight);
+            _contentView.frame = CGRectMake(0, KDeviceHeight, self.frame.size.width, _contentHeight);
         }
-        [_contentView setHeight:itemsHeight >= _contentHeight ? _contentHeight : itemsHeight];
-    }else if (currentType == XSFluctuateViewTypeActionSheet) {
+        CGRect r        = _contentView.frame;
+        r.size.height   = itemsHeight >= _contentHeight ? _contentHeight : itemsHeight;
+        _contentView.frame      = r;
+    }else if (currentType == ASFluctuateViewTypeActionSheet) {
         _contentView.frame = CGRectMake(10, KDeviceHeight, kDeviceWidth - 20, _contentHeight - ITEMHEIGHT - 17);
-        [_contentView setHeight:itemsHeight >= _contentHeight ? _contentHeight - ITEMHEIGHT - 17 : itemsHeight - ITEMHEIGHT - 17];
+        CGRect r        = _contentView.frame;
+        r.size.height   = itemsHeight >= _contentHeight ? _contentHeight - ITEMHEIGHT - 17 : itemsHeight - ITEMHEIGHT - 17;
+        _contentView.frame      = r;
+
     }
     
     return _contentView;
@@ -153,7 +162,9 @@
 
 - (void)itemButtonClick:(UIButton *)btn{
     [self hideFluctuateView];
-    [self.delegate fluctuateView:self content:self.contentView itemIndex:btn.tag];
+    if ([self.delegate respondsToSelector:@selector(fluctuateView:content:itemIndex:)]) {
+        [self.delegate fluctuateView:self content:self.contentView itemIndex:btn.tag];
+    }
 }
 
 - (void)showInView:(UIView *)parentView{
@@ -164,13 +175,17 @@
         if (_isUpToDown) {
             
         }else{
-            if (currentType == XSFluctuateViewTypeRectangle) {
+            if (currentType == ASFluctuateViewTypeRectangle) {
                 if (itemsHeight >= _contentHeight) {
-                    [self.contentView setY:KDeviceHeight - _contentHeight];
+                    CGRect r        = self.contentView.frame;
+                    r.origin.y      = KDeviceHeight - _contentHeight;
+                    self.contentView.frame      = r;
+
                 }else{
-                    [self.contentView setY:KDeviceHeight - itemsHeight];
-                }
-            }else if (currentType == XSFluctuateViewTypeActionSheet){
+                    CGRect r        = self.contentView.frame;
+                    r.origin.y      = KDeviceHeight - itemsHeight;
+                    self.contentView.frame      = r;                }
+            }else if (currentType == ASFluctuateViewTypeActionSheet){
                 if (itemsHeight >= _contentHeight) {
                     self.contentView.frame = CGRectMake(10, KDeviceHeight - _contentHeight, kDeviceWidth - 20, _contentHeight - ITEMHEIGHT - 17);
                 }else{
@@ -189,9 +204,10 @@
         if (self.isUpToDown) {
             self.contentView.alpha = 0;
         }else{
-            if (currentType == XSFluctuateViewTypeRectangle) {
-                [self.contentView setY:KDeviceHeight];
-            }else if (currentType == XSFluctuateViewTypeActionSheet){
+            if (currentType == ASFluctuateViewTypeRectangle) {
+                CGRect r        = self.contentView.frame;
+                r.origin.y      = KDeviceHeight;
+                self.contentView.frame      = r;            }else if (currentType == ASFluctuateViewTypeActionSheet){
                 self.contentView.frame = CGRectMake(10, KDeviceHeight, kDeviceWidth - 20, ITEMHEIGHT * (_itemArray.count - 1));
                 self.cancelView.frame = CGRectMake(10, KDeviceHeight, kDeviceWidth - 20, ITEMHEIGHT);
             }
@@ -203,5 +219,41 @@
 }
 
 
+- (UILabel *)buildLabelWithFrame:(CGRect) frame bgColor:(UIColor *)bgColor textColor:(UIColor *)tColor font:(UIFont *)f
+{
+    UILabel *label = [[UILabel alloc] initWithFrame:frame];
+    label.backgroundColor = [UIColor clearColor];
+    if (bgColor) {
+        label.backgroundColor = bgColor;
+    }
+    label.textColor = tColor;
+    label.text = @"";
+    label.font = [UIFont systemFontOfSize:14];
+    if (f) {
+        label.font = f;
+    }
+    return label;
+}
 
+- (void)setCornerRadiusWithView:(UIView *)view corner:(float)corner BorderColor:(UIColor *)boederColor borderWidth:(float)borderWidth  masksToBounds:(BOOL)mask{
+    if (boederColor) {
+        view.layer.borderColor = boederColor.CGColor;
+    }
+    view.layer.borderWidth = borderWidth;
+    view.layer.cornerRadius = corner;
+    view.layer.masksToBounds = mask;
+}
+
+- (UIButton *)buildButtonWithFrame:(CGRect)frame bgColor:(UIColor *)bgC title:(NSString *)titleS font:(CGFloat)f textColor:(UIColor *)textC corner:(CGFloat)c{
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = frame;
+    button.backgroundColor = bgC;
+    [button setTitle:titleS forState:UIControlStateNormal];
+    [button setTitleColor:textC forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:f];
+    button.clipsToBounds = YES;
+    button.layer.cornerRadius = c;
+    
+    return button;
+}
 @end
